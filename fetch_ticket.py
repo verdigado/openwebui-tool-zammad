@@ -49,10 +49,7 @@ class Tools:
             ...,
             description="The numeric ID of the Zammad ticket to fetch.",
         ),
-        include_articles: bool = Field(
-            True,
-            description="Whether to include the ticket's articles (messages/notes).",
-        ),
+        include_articles: bool = True,
     ) -> str:
         """
         Fetch a Zammad ticket by ID and return its metadata together with the

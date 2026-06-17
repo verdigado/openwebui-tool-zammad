@@ -34,10 +34,7 @@ class Tools:
                 "field-specific queries like 'state.name:open' or 'title:network'."
             ),
         ),
-        limit: int = Field(
-            10,
-            description="Maximum number of tickets to return (default 10, max 100).",
-        ),
+        limit: int = 10,
     ) -> str:
         """
         Search the configured Zammad for the given query and return a list of

@@ -6,7 +6,6 @@ description: Create a shared draft answer for a Zammad ticket via the REST API s
 import os
 import uuid
 import requests
-from pydantic import Field
 
 ZAMMAD_URL = "https://zammad.example.com"
 ZAMMAD_API_KEY = ""
@@ -29,40 +28,22 @@ class Tools:
 
     def create_zammad_draft(
         self,
-        ticket_id: int = Field(
-            ...,
-            description="The numeric ID of the Zammad ticket to create the draft answer for.",
-        ),
-        body: str = Field(
-            ...,
-            description="The text of the draft answer. Plain text is converted to HTML line breaks.",
-        ),
-        subject: str = Field(
-            "",
-            description="Optional subject line for the draft answer.",
-        ),
-        article_type: str = Field(
-            "email",
-            description=(
-                "Article type for the draft: 'email' for a customer reply (default) "
-                "or 'note' for an internal note."
-            ),
-        ),
-        to: str = Field(
-            "",
-            description="Optional recipient address for an email draft answer.",
-        ),
-        internal: bool = Field(
-            False,
-            description=(
-                "Whether the drafted article is internal (agent-only). Defaults to "
-                "false so the draft is a customer-facing reply."
-            ),
-        ),
+        ticket_id: int,
+        body: str,
+        subject: str = "",
+        article_type: str = "email",
+        to: str = "",
+        internal: bool = False,
     ) -> str:
         """
         Create a shared draft answer on a Zammad ticket. The draft is stored on the
         ticket so an agent can open it in the reply composer, review, and send it.
+        :param ticket_id: The numeric ID of the Zammad ticket to create the draft answer for.
+        :param body: The text of the draft answer. Plain text is converted to HTML line breaks.
+        :param subject: Optional subject line for the draft answer.
+        :param article_type: Article type for the draft: 'email' for a customer reply (default) or 'note' for an internal note.
+        :param to: Optional recipient address for an email draft answer.
+        :param internal: Whether the drafted article is internal (agent-only). Defaults to false so the draft is a customer-facing reply.
         """
         headers = _headers()
         if not headers:
